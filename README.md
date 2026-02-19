@@ -1,8 +1,10 @@
-# LearnOpenGL - CLion
-This is a project template for OpenGL development with JetBrains CLion IDE.
-It was created mainly for [LearnOpenGL tutorials](https://learnopengl.com/).
-Includes GLAD and GLFW libraries. Has a simple main.cpp file with ["Hello Window"](https://learnopengl.com/Getting-started/Hello-Window) for testing purposes.
+# LearnOpenGL
+A simple side-project to relearn computer graphic fundamentals. Feel free to use the resources in this project, but
+please credit any of the resources listed below!
 
-Works on multiple platforms. Tested on:
-- MacOS 10.13.3, CLion 2017.3.3, Xcode toolchain
-- Windows 10, CLion 2017.3.3, MinGW toolchain
+This project is built using the LearnOpenGL Clion repository as well as other resources cited below:
+
+### Works Cited
+[LearnOpenGL](https://learnopengl.com/) - Primary resource & tutorials
+
+[LearnOpenGL Clion](https://github.com/Konf/LearnOpenGL-CLion) - Used for base project configuration, uploaded by Konf (Github)
