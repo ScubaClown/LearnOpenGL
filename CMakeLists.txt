@@ -15,3 +15,8 @@ include_directories(glad/include)
 set(SOURCE_FILES01 src/01-window/main.cpp glad/src/glad.c)
 add_executable(01-window ${SOURCE_FILES01})
 target_link_libraries(01-window glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
+
+#02: triangle
+set(SOURCE_FILES02 src/02-triangle/main.cpp glad/src/glad.c)
+add_executable(02-triangle ${SOURCE_FILES02})
+target_link_libraries(02-triangle glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
