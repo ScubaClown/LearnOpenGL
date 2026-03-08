@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 
 find_package(OpenGL REQUIRED)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 # Including GLFW
 add_subdirectory(glfw)
@@ -28,3 +28,9 @@ target_link_libraries(02-triangle glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
 set(SOURCE_FILES03 src/03-shaders/main.cpp glad/src/glad.c)
 add_executable(03-shaders ${SOURCE_FILES03})
 target_link_libraries(03-shaders glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
+
+#Move actual shaders to cmake-build / cmake-build-debug directory when compiling (Clion why)
+set(PROJECT03_SOURCE "${CMAKE_SOURCE_DIR}/src/03-shaders")
+set(BUILD_DESTINATION "${CMAKE_BINARY_DIR}")
+file(COPY "${PROJECT03_SOURCE}/fragmentshader.frag" DESTINATION ${BUILD_DESTINATION})
+file(COPY "${PROJECT03_SOURCE}/vertexshader.vert" DESTINATION ${BUILD_DESTINATION})

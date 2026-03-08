@@ -21,21 +21,6 @@ const unsigned int indices[] = {
     0, 1, 3,
 };
 
-//Vertex shader
-const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-
-const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\0";
-
 //Shader IDs
 unsigned int vertexShader;
 unsigned int fragmentShader;
@@ -81,21 +66,8 @@ int main()
         return -1;
     }
 
-    //Shader Setup
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    //Using shader class as provided by LearnOpenGL's tutorial
+    Shader mainShader("vertexshader.vert", "fragmentshader.frag");
 
     //Buffer Setup
     glGenBuffers(1, &VBO);
@@ -126,11 +98,10 @@ int main()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shaderProgram);
+        mainShader.use();
         glBindVertexArray(VAO);
 
-        //glDrawArrays(GL_TRIANGLES, 0, 3); //For triangles
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         //NOTE: draw first, then switch to window to prevent issues
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
