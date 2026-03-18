@@ -68,6 +68,9 @@ int main()
 
     //Using shader class as provided by LearnOpenGL's tutorial
     Shader mainShader("vertexshader.vert", "fragmentshader.frag");
+    Shader upsidedownShader("upside-down.vert", "fragmentshader.frag");
+    Shader offsetShader("offset.vert", "fragmentshader.frag");
+    Shader vertexToColorShader("vertexOutColor.vert", "fragmentInVertex.frag");
 
     //Buffer Setup
     glGenBuffers(1, &VBO);
@@ -87,18 +90,38 @@ int main()
 
     // render loop
     // -----------
+    mainShader.use(); //Default to basic vertex / fragment shader
+
+    offsetShader.setFloat("offsetX", 0.25f);
+    offsetShader.setFloat("offsetY", 0.75f);
+    offsetShader.setFloat("offsetZ", 0.125f);
+
     while (!glfwWindowShouldClose(window))
     {
         // input
         // -----
         processInput(window);
 
+        //Shader switching
+        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+            mainShader.use();
+        }
+        else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+            upsidedownShader.use();
+        }
+        else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+            offsetShader.use();
+        }
+        else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+            vertexToColorShader.use();
+        }
+
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        mainShader.use();
+        //mainShader.use();
         glBindVertexArray(VAO);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
