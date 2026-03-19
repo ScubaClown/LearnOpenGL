@@ -11,14 +11,22 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-const float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+float vertices[] = {
+    // positions          // colors           // texture coords
+    0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+    0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
 };
 
 const unsigned int indices[] = {
     0, 1, 3,
+};
+
+float texCoords[] = {
+    0.0f, 0.0f,  // lower-left corner
+    1.0f, 0.0f,  // lower-right corner
+    0.5f, 1.0f   // top-center corner
 };
 
 //Shader IDs
@@ -68,9 +76,6 @@ int main()
 
     //Using shader class as provided by LearnOpenGL's tutorial
     Shader mainShader("vertexshader.vert", "fragmentshader.frag");
-    Shader upsidedownShader("upside-down.vert", "fragmentshader.frag");
-    Shader offsetShader("offset.vert", "fragmentshader.frag");
-    Shader vertexToColorShader("vertexOutColor.vert", "fragmentInVertex.frag");
 
     //Buffer Setup
     glGenBuffers(1, &VBO);
@@ -90,30 +95,13 @@ int main()
 
     // render loop
     // -----------
-    mainShader.use(); //Default to basic vertex / fragment shader\
+    mainShader.use(); //Default to basic vertex / fragment shader
 
     while (!glfwWindowShouldClose(window))
     {
         // input
         // -----
         processInput(window);
-
-        //Shader switching
-        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-            mainShader.use();
-        }
-        else if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-            upsidedownShader.use();
-        }
-        else if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-            offsetShader.setFloat("offsetX", 0.25f);
-            offsetShader.setFloat("offsetY", 0.75f);
-            offsetShader.setFloat("offsetZ", 0.125f);
-            offsetShader.use();
-        }
-        else if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
-            vertexToColorShader.use();
-        }
 
         // render
         // ------

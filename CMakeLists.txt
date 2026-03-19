@@ -38,3 +38,10 @@ file(COPY "${PROJECT03_SOURCE}/upside-down.vert" DESTINATION ${BUILD_DESTINATION
 file(COPY "${PROJECT03_SOURCE}/offset.vert" DESTINATION ${BUILD_DESTINATION})
 file(COPY "${PROJECT03_SOURCE}/vertexOutColor.vert" DESTINATION ${BUILD_DESTINATION})
 file(COPY "${PROJECT03_SOURCE}/fragmentInVertex.frag" DESTINATION ${BUILD_DESTINATION})
+
+#04: textures
+set(SOURCE_FILES04 src/04-textures/main.cpp glad/src/glad.c)
+add_executable(04-textures ${SOURCE_FILES04})
+target_link_libraries(04-textures glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
+set(PROJECT04_SOURCE "${CMAKE_SOURCE_DIR}/src/04-textures")
+set(BUILD_DESTINATION "${CMAKE_BINARY_DIR}")
