@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <shader.h>
+#include <stb_image.h>
 
 #include <iostream>
 
@@ -21,6 +22,7 @@ float vertices[] = {
 
 const unsigned int indices[] = {
     0, 1, 3,
+    1, 2, 3
 };
 
 float texCoords[] = {
@@ -40,6 +42,8 @@ unsigned int VBO;
 unsigned int VAO;
 //Element Buffer Object (Not necessary for this lesson)
 unsigned int EBO;
+//Texture ID
+unsigned int texture;
 
 int main()
 {
@@ -92,6 +96,28 @@ int main()
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0); //unbinding VAO so it isn't modified (shouldn't happen)
+
+    //Texture Setup
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //Texture setup (mipmaps)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    int textureWidth, textureHeight, textureChannels;
+    unsigned char *textureData = stbi_load("wall.jpg", &textureWidth, &textureHeight, &textureChannels, 0);
+    if (textureData)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(textureData);
 
     // render loop
     // -----------
