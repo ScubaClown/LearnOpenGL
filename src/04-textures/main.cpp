@@ -25,12 +25,6 @@ const unsigned int indices[] = {
     1, 2, 3
 };
 
-float texCoords[] = {
-    0.0f, 0.0f,  // lower-left corner
-    1.0f, 0.0f,  // lower-right corner
-    0.5f, 1.0f   // top-center corner
-};
-
 //Shader IDs
 unsigned int vertexShader;
 unsigned int fragmentShader;
@@ -79,7 +73,7 @@ int main()
     }
 
     //Using shader class as provided by LearnOpenGL's tutorial
-    Shader mainShader("vertexshader.vert", "fragmentshader.frag");
+    Shader mainShader("vertextexture.vert", "fragmenttexture.frag");
 
     //Buffer Setup
     glGenBuffers(1, &VBO);
@@ -92,10 +86,16 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // Rectangle data setup
+    // Positions
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0); //unbinding VAO so it isn't modified (shouldn't happen)
+    // Colors
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // Texture Coordinates
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     //Texture Setup
     glGenTextures(1, &texture);
@@ -107,7 +107,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int textureWidth, textureHeight, textureChannels;
-    unsigned char *textureData = stbi_load("wall.jpg", &textureWidth, &textureHeight, &textureChannels, 0);
+    unsigned char *textureData = stbi_load("container.jpg", &textureWidth, &textureHeight, &textureChannels, 0);
     if (textureData)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
@@ -137,7 +137,7 @@ int main()
         //mainShader.use();
         glBindVertexArray(VAO);
 
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         //NOTE: draw first, then switch to window to prevent issues
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

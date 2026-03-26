@@ -47,4 +47,6 @@ add_executable(04-textures ${SOURCE_FILES04})
 target_link_libraries(04-textures glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
 set(PROJECT04_SOURCE "${CMAKE_SOURCE_DIR}/src/04-textures")
 
-file(COPY "${PROJECT04_SOURCE}/wall.jpg" DESTINATION ${BUILD_DESTINATION})
+file(COPY "${PROJECT04_SOURCE}/fragmenttexture.frag" DESTINATION ${BUILD_DESTINATION})
+file(COPY "${PROJECT04_SOURCE}/vertextexture.vert" DESTINATION ${BUILD_DESTINATION})
+file(COPY "${PROJECT04_SOURCE}/container.jpg" DESTINATION ${BUILD_DESTINATION})
