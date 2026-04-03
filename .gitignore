@@ -4,4 +4,6 @@ glad/*
 !glad
 glfw/*
 !glfw
+glm/*
+/glm/glm/
 cmake-build*

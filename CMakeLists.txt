@@ -11,6 +11,10 @@ include_directories(glfw/include)
 # Including GLAD
 include_directories(glad/include)
 
+# Including GLM
+include_directories(glm/glm)
+include_directories(glm/glm/gtc)
+
 #LearnOpenGL tutorial utilities
 include_directories(src/common/include)
 
@@ -50,3 +54,11 @@ set(PROJECT04_SOURCE "${CMAKE_SOURCE_DIR}/src/04-textures")
 file(COPY "${PROJECT04_SOURCE}/fragmenttexture.frag" DESTINATION ${BUILD_DESTINATION})
 file(COPY "${PROJECT04_SOURCE}/vertextexture.vert" DESTINATION ${BUILD_DESTINATION})
 file(COPY "${PROJECT04_SOURCE}/container.jpg" DESTINATION ${BUILD_DESTINATION})
+
+#05: transformations
+set(SOURCE_FILES05 src/05-transformations/main.cpp glad/src/glad.c src/common/include/stb_image.cpp)
+add_executable(05-transformations ${SOURCE_FILES05})
+target_link_libraries(05-transformations glfw ${GLFW_LIBRARIES} ${OPENGL_LIBRARY})
+set(PROJECT05_SOURCE "${CMAKE_SOURCE_DIR}/src/05-transformations")
+file(COPY "${PROJECT05_SOURCE}/fragmenttransform.frag" DESTINATION ${BUILD_DESTINATION})
+file(COPY "${PROJECT05_SOURCE}/vertextransform.vert" DESTINATION ${BUILD_DESTINATION})

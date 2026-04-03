@@ -10,3 +10,5 @@ This project is built using the LearnOpenGL Clion repository as well as other re
 [LearnOpenGL Clion](https://github.com/Konf/LearnOpenGL-CLion) - Used for base project configuration, uploaded by Konf (Github)
 
 [Sean Barrett et al.](https://github.com/nothings/stb/blob/master/stb_image.h) - stb_image.h image loading file (Github) 
+
+[OpenGL Mathematics](https://glm.g-truc.net/0.9.8/index.html) - Base library for matrices and other math utilities
